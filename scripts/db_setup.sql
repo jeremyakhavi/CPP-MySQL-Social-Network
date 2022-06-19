@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS messages (
         /* CASCADE keyword will update to_id value if users.id changes */
 );
 
-CREATE TABLE IF NOT EXISTS followings (
+CREATE TABLE IF NOT EXISTS network (
     follower INT NOT NULL,
     folowee INT NOT NULL,
     PRIMARY KEY (follower, folowee),
