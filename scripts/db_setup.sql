@@ -32,12 +32,12 @@ CREATE TABLE IF NOT EXISTS messages (
 
 CREATE TABLE IF NOT EXISTS network (
     follower INT NOT NULL,
-    folowee INT NOT NULL,
-    PRIMARY KEY (follower, folowee),
+    followee INT NOT NULL,
+    PRIMARY KEY (follower, followee),
     FOREIGN KEY (follower) REFERENCES users(id)
         ON UPDATE CASCADE
         ON DELETE CASCADE,
-    FOREIGN KEY (folowee) REFERENCES users(id)
+    FOREIGN KEY (followee) REFERENCES users(id)
         ON UPDATE CASCADE
         ON DELETE CASCADE
 );
