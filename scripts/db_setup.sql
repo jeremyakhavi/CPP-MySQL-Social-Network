@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS followings (
     PRIMARY KEY (follower, folowee),
     FOREIGN KEY (follower) REFERENCES users(id)
         ON UPDATE CASCADE
-        ON DELETE CASCADE
+        ON DELETE CASCADE,
     FOREIGN KEY (folowee) REFERENCES users(id)
         ON UPDATE CASCADE
         ON DELETE CASCADE
