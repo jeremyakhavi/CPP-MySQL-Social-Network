@@ -48,4 +48,34 @@ BEGIN
     END WHILE;
 END $$
 
+/* SeedNetwork -> Create relations between users and insert into network table */
+CREATE PROCEDURE SeedNetwork(IN num_relations INT)
+BEGIN
+    DECLARE first_user INT;
+    DECLARE second_user INT;
+    DECLARE i INT DEFAULT 0;
+
+    outer_while: WHILE i < num_relations DO
+        REPEAT
+            CALL FindUserIDs(first_user, second_user);
+            /* ensure user ids exist, re-call FindUserIDs if not */
+            inner_while: WHILE((SELECT COUNT(id) FROM users WHERE id=first_user) = 0 OR
+                               (SELECT COUNT(id) FROM users WHERE id=second_user) = 0)
+                               DO
+                                CALL FindUserIDs(first_user, second_user);
+            END WHILE inner_while;
+        /* repeat until new network relation is unique */
+        UNTIL ((SELECT COUNT(*) FROM network 
+                WHERE follower=first_user AND followee=second_user) = 0)
+        END REPEAT;
+
+        INSERT INTO network(follower, followee) VALUES(first_user, second_user);
+
+        SET i = i + 1;
+
+        SELECT first_user, second_user;
+
+    END WHILE outer_while;
+END $$
+
 DELIMITER ;
